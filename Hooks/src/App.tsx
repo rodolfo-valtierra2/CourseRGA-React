@@ -1,32 +1,24 @@
 import { useState, useEffect } from 'react'
 
+function Button({ onClickFunction }) {
+  return <button onClick={onClickFunction}>+1</button>;
+}
+
+const Result = ({ value }) => {
+  return <div>Result: {value}</div>;
+};
+
 function App() {
-  return <Parent />;
-}
+  const [counter, setCounter] = useState(0);
 
-function Parent() {
-  const handleRequest = (request) => {
-    if (request.includes('car')) {
-      alert('No');
-    }
+  const incrementCounter = () => {
+    setCounter((previousCounter) => previousCounter + 1);
   };
 
   return (
     <div>
-      <h1>Parent</h1>
-      <Child onRequest={handleRequest} />
-    </div>
-  );
-}
-function Child(props) {
-  const handleClick = () => {
-    props.onRequest('Can I have the car?');
-  };
-
-  return (
-    <div>
-      <h2>Child</h2>
-      <button onClick={handleClick}>Ask for the car</button>
+      <Button onClickFunction={incrementCounter} />
+      <Result value={counter} />
     </div>
   );
 }
