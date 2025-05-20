@@ -9,13 +9,13 @@ function App() {
   return (
     <div>
       <button onClick={handleClick}>Actions</button>
-      {isOpen ? (
+      {isOpen && (
         <ul>
           <li>Edit</li>
           <li>Remove</li>
           <li>Archive</li>
         </ul>
-      ) : null}
+      )}
     </div>
   );
 }
