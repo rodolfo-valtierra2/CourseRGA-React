@@ -1,21 +1,30 @@
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  return <Parent />;
+}
+
+function Parent() {
+  const [words, setWords] = useState('');
+
   const handleClick = () => {
-    setIsOpen((currentIsOpen) => !currentIsOpen);
+    setWords('Did you do your homework?');
   };
 
   return (
     <div>
-      <button onClick={handleClick}>Actions</button>
-      {isOpen && (
-        <ul>
-          <li>Edit</li>
-          <li>Remove</li>
-          <li>Archive</li>
-        </ul>
-      )}
+      <h1>Parent</h1>
+      <button onClick={handleClick}>Ask</button>
+      <Child hears={words} />
+    </div>
+  );
+}
+
+function Child(props) {
+  return (
+    <div>
+      <h2>Child</h2>
+      <p>{props.hears}</p>
     </div>
   );
 }
