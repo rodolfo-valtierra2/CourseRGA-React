@@ -1,6 +1,10 @@
 import { Project } from './Project';
 import PropTypes from 'prop-types';
 
+function formatDescription(description) {
+  return description.substring(0, 60) + '...';
+}
+
 function ProjectCard (props) {
     const {project} = props
 
