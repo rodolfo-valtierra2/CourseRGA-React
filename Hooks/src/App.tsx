@@ -5,26 +5,28 @@ function App() {
 }
 
 function Parent() {
-  const [words, setWords] = useState('');
-
-  const handleClick = () => {
-    setWords('Did you do your homework?');
+  const handleRequest = (request) => {
+    if (request.includes('car')) {
+      alert('No');
+    }
   };
 
   return (
     <div>
       <h1>Parent</h1>
-      <button onClick={handleClick}>Ask</button>
-      <Child hears={words} />
+      <Child onRequest={handleRequest} />
     </div>
   );
 }
-
 function Child(props) {
+  const handleClick = () => {
+    props.onRequest('Can I have the car?');
+  };
+
   return (
     <div>
       <h2>Child</h2>
-      <p>{props.hears}</p>
+      <button onClick={handleClick}>Ask for the car</button>
     </div>
   );
 }
