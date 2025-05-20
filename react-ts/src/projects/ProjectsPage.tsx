@@ -1,5 +1,5 @@
 import {MOCK_PROJECTS} from './MockProjects.ts'
-import ProjectList from './ProjectList.tsx';
+import ProjectList from './ProjectList';
 
 function ProjectsPage(){
     return <>
