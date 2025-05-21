@@ -1,6 +1,14 @@
+import PropTypes from 'prop-types'
+import { Project } from './Project';
 
-function ProjectForm() {
-    return <form className="input-group vertical">
+function ProjectForm({onCancel, onSave}) {
+
+    const onHandleSubmit = (event) => {
+        event.preventDefault();
+        onSave(new Project({name: 'Update Project'}));
+    }
+
+    return <form className="input-group vertical" onSubmit={onHandleSubmit}>
         <label for="name">Project Name</label>
         <input type="text" name="name" placeholder="enter name" />
         <label for="description">Project Description</label>
@@ -15,9 +23,17 @@ function ProjectForm() {
         <div className="input-group">
             <button className="primary bordered medium">Save</button>
             <span></span>
-            <button type="button" className="bordered medium">cancel</button>
+            <button type="button" className="bordered medium"
+                onClick={onCancel}>
+                cancel
+            </button>
         </div>
     </form>
+}
+
+ProjectForm.propTypes = {
+    onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
 }
 
 export default ProjectForm
