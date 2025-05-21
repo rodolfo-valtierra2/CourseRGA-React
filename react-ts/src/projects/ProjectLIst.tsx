@@ -5,7 +5,7 @@ import ProjectCard from './ProjectCard'
 import ProjectForm from './ProjectForm'
 
 
-function ProjectList({ projects, onSave}) {
+function ProjectList({ projects, onSave, isLoading, error}) {
   const [projectBeingEdited, setProjectBeingEdited] = useState();  
 
   const handleEdit = (project) => {
@@ -15,6 +15,18 @@ function ProjectList({ projects, onSave}) {
    const cancelEdit = () => {
       setProjectBeingEdited(null)
    }
+
+   if (isLoading)
+   return <div className="row">
+    <div className="card large error">
+      <section>
+        <p>
+          <span className="icon-alert inverse "></span>
+          {error}
+        </p>
+      </section>
+    </div>
+  </div>
 
    return (
     <div className="row">
@@ -37,7 +49,8 @@ function ProjectList({ projects, onSave}) {
 
 ProjectList.propTypes = {
     projects: PropTypes.arrayOf(PropTypes.instanceOf(Project)).isRequired,
-    onSave: PropTypes.func.isRequired
+    onSave: PropTypes.func.isRequired,
+    onLoading: PropTypes.func.isRequired
 };
 
 export default ProjectList;
