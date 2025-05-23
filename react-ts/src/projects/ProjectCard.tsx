@@ -1,14 +1,18 @@
 import { Project } from './Project';
-import PropTypes from 'prop-types';
 
-function formatDescription(description) {
+function formatDescription(description:string) {
   return description.substring(0, 60) + '...';
 }
 
-function ProjectCard (props) {
+interface Props {
+	project: Project;
+	onEdit: (project:Project) => void;
+}
+
+function ProjectCard (props: Props) {
     const {project, onEdit} = props
 
-    const handleEditClick = (projectBeingEdited) => {
+    const handleEditClick = (projectBeingEdited:Project) => {
       onEdit(projectBeingEdited);
     };
 
@@ -28,10 +32,5 @@ function ProjectCard (props) {
       </section>
     </div>
 }
-
-ProjectCard.propTypes = {
-  project: PropTypes.instanceOf(Project).isRequired,
-  onEdit: PropTypes.func.isRequired
-};
 
 export default ProjectCard

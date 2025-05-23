@@ -4,8 +4,13 @@ import { Project } from './Project';
 import ProjectCard from './ProjectCard'
 import ProjectForm from './ProjectForm'
 
+interface ProjectListProps {
+  projects: Project[];
+	isLoading: bool;
+	error: object[]
+}
 
-function ProjectList({ projects, onSave, isLoading, error}) {
+function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
   const [projectBeingEdited, setProjectBeingEdited] = useState();  
 
   const handleEdit = (project) => {

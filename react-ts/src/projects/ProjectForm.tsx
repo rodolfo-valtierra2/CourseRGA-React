@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types'
 import { Project } from './Project';
-import { useState } from 'react'
+import { useState, SyntheticEvent } from 'react'
 
-function ProjectForm({ onCancel, onSave, project: initialProject }) {
+interface ProjectFormProps {
+	onCancel: () => void;
+	onSave: (event: SyntheticEvent) => void;
+	project: Project;
+}
+
+function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormProps) {
     const [project, setProject] = useState(initialProject)
     const [errors, setErrors] = useState({
         name: '',
@@ -15,7 +20,7 @@ function ProjectForm({ onCancel, onSave, project: initialProject }) {
         if (isValid()) onSave(project);
     }
 
-    const addValues = ({ target }) => {
+    const addValues = ({ target }: any) => {
         setProject(p => {
             p[target.name] = target.type == 'checkbox' ? target.checked : target.value;
             setErrors(() => validate(p))
@@ -23,8 +28,9 @@ function ProjectForm({ onCancel, onSave, project: initialProject }) {
         })
     }
 
-    function validate(project) {
-        let errors = { name: '', description: '', budget: '' };
+    function validate(project:Project) {
+        const errors:any = { name: '', description: '', budget: '' };
+
         if (project.name.length === 0) {
             errors.name = 'Name is required';
         }
@@ -82,12 +88,6 @@ function ProjectForm({ onCancel, onSave, project: initialProject }) {
             </button>
         </div>
     </form>
-}
-
-ProjectForm.propTypes = {
-    onCancel: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
-    project: PropTypes.instanceOf(Project)
 }
 
 export default ProjectForm

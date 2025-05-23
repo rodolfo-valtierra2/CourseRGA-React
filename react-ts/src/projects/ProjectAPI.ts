@@ -3,7 +3,7 @@ import { Project } from './Project';
 const baseUrl = 'http://localhost:3000';
 const url = `${baseUrl}/projects`;
 
-function translateStatusToErrorMessage(status) {
+function translateStatusToErrorMessage(status:number) {
   switch (status) {
     case 401:
       return 'Please login again.';
@@ -14,7 +14,7 @@ function translateStatusToErrorMessage(status) {
   }
 }
 
-function checkStatus(response) {
+function checkStatus(response:HTTPRespose) {
   if (response.ok) {
     return response;
   } else {
@@ -34,21 +34,14 @@ function parseJSON(response) {
   return response.json();
 }
 
-// eslint-disable-next-line
-function delay(ms) {
-  return function (x) {
-    return new Promise((resolve) => setTimeout(() => resolve(x), ms));
-  };
-}
 
 const projectAPI = {
   get(page = 1, limit = 20) {
     return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
-      .then(delay(600))
       .then(checkStatus)
       .then(parseJSON)
       .then((projects) => {
-        return projects.map((p) => {
+        return projects.map((p:Project) => {
           return new Project(p);
         });
       })

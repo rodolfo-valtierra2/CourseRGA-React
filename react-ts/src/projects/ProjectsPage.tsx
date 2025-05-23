@@ -5,9 +5,9 @@ import {useEffect, useState} from 'react'
 import {projectAPI} from './ProjectAPI'
 
 function ProjectsPage(){
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | undefined>(undefined)
     const [currentPage, setCUrrentPage ] = useState(1);
 
     useEffect(() => {
@@ -19,6 +19,7 @@ function ProjectsPage(){
                 const data = await projectAPI.get(currentPage);
                 setProjects(data);
             }catch (e) {
+							if(e instanceof Error)
                 setError(e.message);
             } finally {
                 setLoading(false);

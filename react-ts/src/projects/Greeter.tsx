@@ -1,12 +1,11 @@
 
-
-function Greeter (props) {
+interface Props {
+	name: string
+}
+function Greeter (props:Props) {
     return <h1>Holle, {props.name}</h1>
 }
 
-Greeter.propTypes  = {
-    name: PropTypes.string.isRequired,
-}
 const Element = <Greeter name={1}/>
 export default Element;
 
