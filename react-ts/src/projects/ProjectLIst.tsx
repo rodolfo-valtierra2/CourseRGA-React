@@ -1,37 +1,37 @@
 import {useState} from 'react';
-import PropTypes from 'prop-types';
 import { Project } from './Project';
 import ProjectCard from './ProjectCard'
 import ProjectForm from './ProjectForm'
 
 interface ProjectListProps {
   projects: Project[];
-	isLoading: bool;
-	error: object[]
+	isLoading: boolean;
+	onSave: (project:Project)=> void
+	error: project
 }
 
 function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
   const [projectBeingEdited, setProjectBeingEdited] = useState();  
 
-  const handleEdit = (project) => {
+  const handleEdit = (project:Project) => {
      setProjectBeingEdited(project);
    };
 
    const cancelEdit = () => {
-      setProjectBeingEdited(null)
+      setProjectBeingEdited(new Project())
    }
 
    if (isLoading)
-   return <div className="row">
-    <div className="card large error">
-      <section>
-        <p>
-          <span className="icon-alert inverse "></span>
-          {error}
-        </p>
-      </section>
-    </div>
-  </div>
+		 return <div className="row">
+			<div className="card large error">
+				<section>
+					<p>
+						<span className="icon-alert inverse "></span>
+						{error}
+					</p>
+				</section>
+			</div>
+		</div>
 
    return (
     <div className="row">
@@ -51,11 +51,5 @@ function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
   );
  
 }
-
-ProjectList.propTypes = {
-    projects: PropTypes.arrayOf(PropTypes.instanceOf(Project)).isRequired,
-    onSave: PropTypes.func.isRequired,
-    onLoading: PropTypes.func.isRequired
-};
 
 export default ProjectList;

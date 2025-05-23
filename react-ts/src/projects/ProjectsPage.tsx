@@ -1,6 +1,5 @@
-import {MOCK_PROJECTS} from './MockProjects.ts'
-import type { Project } from './Project.ts';
-import ProjectList from './ProjectList';
+import { Project } from './Project.ts';
+import ProjectList from './ProjectList.tsx';
 import {useEffect, useState} from 'react'
 import {projectAPI} from './ProjectAPI'
 
@@ -8,7 +7,7 @@ function ProjectsPage(){
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | undefined>(undefined)
-    const [currentPage, setCUrrentPage ] = useState(1);
+    const [currentPage, setCurrentPage ] = useState(1);
 
     useEffect(() => {
         async function loadProjects() {
@@ -39,7 +38,7 @@ function ProjectsPage(){
 				.then(updatedProject => {
 					const updatedProjects = project.map((p:Project) => 
 						p.id===project.id?new Project(updatedProject):p)
-					setProjcet(updatedProjects)
+					setProjects(updatedProjects)
 				}).catch(e => {
 					if (e instanceof Error) 
 						setError(e.message)
@@ -56,7 +55,8 @@ function ProjectsPage(){
         <h1>Projects</h1>
         <ProjectList onSave={saveProject} 
         projects={projects} 
-        onLoading={loading}/>
+        onLoading={loading}
+				error={error}/>
         <div className="row">
           <div className="col-sm-12">
             <div className="button-group fluid">

@@ -1,9 +1,8 @@
 import { Project } from './Project';
-
 const baseUrl = 'http://localhost:3000';
 const url = `${baseUrl}/projects`;
 
-function translateStatusToErrorMessage(status:number) {
+function translateStatusToErrorMessage(status: number) {
   switch (status) {
     case 401:
       return 'Please login again.';
@@ -14,7 +13,7 @@ function translateStatusToErrorMessage(status:number) {
   }
 }
 
-function checkStatus(response:HTTPRespose) {
+function checkStatus(response: any) {
   if (response.ok) {
     return response;
   } else {
@@ -30,22 +29,34 @@ function checkStatus(response:HTTPRespose) {
   }
 }
 
-function parseJSON(response) {
+function parseJSON(response: Response) {
   return response.json();
 }
 
+// eslint-disable-next-line
+function delay(ms: number) {
+  return function (x: any): Promise<any> {
+    return new Promise((resolve) => setTimeout(() => resolve(x), ms));
+  };
+}
+
+function convertToProjectModels(data: any[]): Project[] {
+  let projects: Project[] = data.map(convertToProjectModel);
+  return projects;
+}
+
+function convertToProjectModel(item: any): Project {
+  return new Project(item);
+}
 
 const projectAPI = {
   get(page = 1, limit = 20) {
     return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
+      .then(delay(600))
       .then(checkStatus)
       .then(parseJSON)
-      .then((projects) => {
-        return projects.map((p:Project) => {
-          return new Project(p);
-        });
-      })
-      .catch((error) => {
+      .then(convertToProjectModels)
+      .catch((error: TypeError) => {
         console.log('log client error ' + error);
         throw new Error(
           'There was an error retrieving the projects. Please try again.'
@@ -62,13 +73,19 @@ const projectAPI = {
     })
       .then(checkStatus)
       .then(parseJSON)
-			.catch((error: TypeError) => {
-				console.log('log client error ' + error);
-				throw new Error(
-					'There was an error updating the project. Please try again.'
-				);
-			})
-	}
+      .catch((error: TypeError) => {
+        console.log('log client error ' + error);
+        throw new Error(
+          'There was an error updating the project. Please try again.'
+        );
+      });
+	},
+	find(id: number) {
+    return fetch(`${url}/${id}`)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(convertToProjectModel);
+  },
 };
 
 export { projectAPI };

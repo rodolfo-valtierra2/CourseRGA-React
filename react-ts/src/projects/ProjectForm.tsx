@@ -1,9 +1,10 @@
-import { Project } from './Project';
-import { useState, SyntheticEvent } from 'react'
+import type { Project } from './Project';
+import { useState } from 'react'
+import type {SyntheticEvent} from 'react'
 
 interface ProjectFormProps {
 	onCancel: () => void;
-	onSave: (event: SyntheticEvent) => void;
+	onSave: (project: Project) => void;
 	project: Project;
 }
 
@@ -15,14 +16,15 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
         budget: ''
     })
 
-    const onHandleSubmit = (event) => {
+    const onHandleSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
         if (isValid()) onSave(project);
     }
 
-    const addValues = ({ target }: any) => {
-        setProject(p => {
-            p[target.name] = target.type == 'checkbox' ? target.checked : target.value;
+    const addValues = (event:SyntheticEvent) => {
+			const {value, checked, type} = event.target as HTMLInputElement
+        setProject((p:Project) => {
+            p[target.name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))
             return { ...p };
         })
@@ -56,27 +58,27 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
     }
 
     return <form className="input-group vertical" onSubmit={onHandleSubmit}>
-        <label for="name">Project Name</label>
+        <label htmlFor="name">Project Name</label>
         <input value={project.name} onChange={addValues} type="text" name="name" placeholder="enter name" />
         {errors.name && <div className="card error">
             <p>{errors.name}</p>
             </div>
         }
-        <label for="description">Project Description</label>
+        <label htmlFor="description">Project Description</label>
 
         <textarea value={project.description} onChange={addValues} name="description" placeholder="enter description"></textarea>
         {errors.description && <div className="card error">
             <p>{errors.description}</p>
             </div>
         }
-        <label for="budget">Project Budget</label>
+        <label htmlFor="budget">Project Budget</label>
 
         <input value={project.budget} onChange={addValues} type="number" name="budget" placeholder="enter budget" />
         {errors.budget && <div className="card error">
             <p>{errors.budget}</p>
             </div>
         }
-        <label for="isActive">Active?</label>
+        <label htmlFor="isActive">Active?</label>
         <input value={project.isActive} onChange={addValues} type="checkbox" name="isActive" />
 
         <div className="input-group">
@@ -87,7 +89,7 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
                 cancel
             </button>
         </div>
-    </form>
+    </form>;
 }
 
 export default ProjectForm
