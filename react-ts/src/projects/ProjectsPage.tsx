@@ -7,7 +7,7 @@ import {projectAPI} from './ProjectAPI'
 function ProjectsPage(){
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(undefined)
+    const [error, setError] = useState(null)
     const [currentPage, setCUrrentPage ] = useState(1);
 
     useEffect(() => {
@@ -33,10 +33,16 @@ function ProjectsPage(){
     }
 
     const saveProject = (project: Project) => {
-         let updatedProjects = projects.map((p) => {
-            return p.id === project.id ? project : p;
-        });
-        setProjects(updatedProjects);
+        projectAPI
+				.put(project)
+				.then(updatedProject => {
+					const updatedProjects = project.map((p:Project) => 
+						p.id===project.id?new Project(updatedProject):p)
+					setProjcet(updatedProjects)
+				}).catch(e => {
+					if (e instanceof Error) 
+						setError(e.message)
+				})
     }
 
     if (loading )
