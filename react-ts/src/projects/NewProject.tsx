@@ -1,32 +1,36 @@
-import type { Project } from './Project';
-import { useState } from 'react'
-import type {SyntheticEvent} from 'react'
+import { Project } from './Project';
+import {useState, SyntheticEvent} from 'react'
+import axios from 'axios'
+const baseUrl = 'http://localhost:3000'
 
-interface ProjectFormProps {
-	onCancel: () => void;
-	onSave: (project: Project) => void;
-	project: Project;
-}
-
-function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormProps) {
-    const [project, setProject] = useState(initialProject)
+function NewProject () {
+		const [project, setProject] = useState(new Project())
     const [errors, setErrors] = useState({
         name: '',
         description: '',
         budget: ''
     })
 
+		const onSave = () => {
+			axios.post(baseUrl, {
+				body: project
+			})
+			.then(console.log)
+			.catch(console.log)
+		}
+
+		const onCancel = () => {}
     const onHandleSubmit = (event: SyntheticEvent) => {
         event.preventDefault();
         if (isValid()) onSave(project);
     }
 
     const addValues = (event:SyntheticEvent) => {
-			const {name, value, checked, type} = event.target as HTMLInputElement
+			const {value, checked, type, name} = event.target as HTMLInputElement
         setProject((p:Project) => {
             p[name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))
-            return { ...p };
+            return p;
         })
     }
 
@@ -92,4 +96,4 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
     </form>;
 }
 
-export default ProjectForm
+export default NewProject
