@@ -1,7 +1,7 @@
 import ProjectsPage from './projects/ProjectsPage.tsx'
 import './App.css'
 import { BrowserRouter, Routes, Route, NavLink} from 'react-router';
-import HomePage from './home/HomePage';
+import HomePage from './home/HomePage.tsx';
 import ProjectPage from './projects/ProjectPage.tsx'
 import NewProject from './projects/NewProject.tsx'
 
@@ -28,7 +28,7 @@ function App() {
 				<Route path="/" element={<HomePage/>}/>
 				<Route path="/projects" element={<ProjectsPage/>}/>
 				<Route path="/projects/:id" element={<ProjectPage/>}/>				
-				<Route path="/NewProject" element={<NewProject project={{name: '', description: '', budget: 32}}/>}/>				
+				<Route path="/NewProject" element={<NewProject/>}/>				
 			</Routes>
 			</div>
 		</BrowserRouter>

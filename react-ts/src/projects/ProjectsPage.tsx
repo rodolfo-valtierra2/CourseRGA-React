@@ -12,7 +12,7 @@ function ProjectsPage(){
     useEffect(() => {
         async function loadProjects() {
             setLoading(true)
-            setError(null);
+            setError(undefined);
 
             try {
                 const data = await projectAPI.get(currentPage);
@@ -29,14 +29,14 @@ function ProjectsPage(){
     }, [currentPage])
 
     const handleMoreClick = () => {
-        setCUrrentPage((page) => page+1)
+        setCurrentPage((page) => page+1)
     }
 
     const saveProject = (project: Project) => {
         projectAPI
 				.put(project)
 				.then(updatedProject => {
-					const updatedProjects = project.map((p:Project) => 
+					const updatedProjects = projects.map((p:Project) => 
 						p.id===project.id?new Project(updatedProject):p)
 					setProjects(updatedProjects)
 				}).catch(e => {

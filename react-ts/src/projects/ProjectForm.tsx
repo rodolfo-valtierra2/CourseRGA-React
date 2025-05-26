@@ -1,14 +1,14 @@
 import type { Project } from './Project';
 import { useState } from 'react'
-import type {SyntheticEvent} from 'react'
+import type { SyntheticEvent } from 'react'
 
 interface ProjectFormProps {
-	onCancel: () => void;
-	onSave: (project: Project) => void;
-	project: Project;
+    onCancel: () => void;
+    onSave: (project: Project) => void;
+    project: Project;
 }
 
-function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormProps) {
+function ProjectForm({ onCancel, onSave, project: initialProject }: ProjectFormProps) {
     const [project, setProject] = useState(initialProject)
     const [errors, setErrors] = useState({
         name: '',
@@ -21,17 +21,17 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
         if (isValid()) onSave(project);
     }
 
-    const addValues = (event:SyntheticEvent) => {
-			const {name, value, checked, type} = event.target as HTMLInputElement
-        setProject((p:Project) => {
+    const addValues = (event: SyntheticEvent) => {
+        const { name, value, checked, type } = event.target as HTMLInputElement
+        setProject((p: Project) => {
             p[name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))
             return { ...p };
         })
     }
 
-    function validate(project:Project) {
-        const errors:any = { name: '', description: '', budget: '' };
+    function validate(project: Project) {
+        const errors: any = { name: '', description: '', budget: '' };
 
         if (project.name.length === 0) {
             errors.name = 'Name is required';
@@ -62,21 +62,21 @@ function ProjectForm({ onCancel, onSave, project:initialProject }: ProjectFormPr
         <input value={project.name} onChange={addValues} type="text" name="name" placeholder="enter name" />
         {errors.name && <div className="card error">
             <p>{errors.name}</p>
-            </div>
+        </div>
         }
         <label htmlFor="description">Project Description</label>
 
         <textarea value={project.description} onChange={addValues} name="description" placeholder="enter description"></textarea>
         {errors.description && <div className="card error">
             <p>{errors.description}</p>
-            </div>
+        </div>
         }
         <label htmlFor="budget">Project Budget</label>
 
         <input value={project.budget} onChange={addValues} type="number" name="budget" placeholder="enter budget" />
         {errors.budget && <div className="card error">
             <p>{errors.budget}</p>
-            </div>
+        </div>
         }
         <label htmlFor="isActive">Active?</label>
         <input value={project.isActive} onChange={addValues} type="checkbox" name="isActive" />
