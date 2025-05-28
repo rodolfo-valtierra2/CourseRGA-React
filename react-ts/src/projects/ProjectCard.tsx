@@ -1,5 +1,6 @@
 import { Project } from './Project';
 import {Link} from 'react-router'
+import { projectAPI } from './ProjectAPI';
 
 function formatDescription(description:string) {
   return description.substring(0, 60) + '...';
@@ -17,6 +18,10 @@ function ProjectCard (props: Props) {
       onEdit(projectBeingEdited);
     };
 
+    const handleDelete = () => {
+      projectAPI.
+    }
+
     return <div className="card">
       <img src={project.imageUrl} alt={project.name} />
       <section className="section dark">
@@ -30,6 +35,9 @@ function ProjectCard (props: Props) {
         <button className="bordered" onClick={() => handleEditClick(project)}>
           <span className="icon-edit "></span>
           Edit
+        </button>
+        <button className="secondary" onClick={() => handleEditClick(project)}>
+          X
         </button>
 
       </section>

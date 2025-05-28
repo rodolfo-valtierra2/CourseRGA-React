@@ -35,8 +35,8 @@ function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
 
    return (
     <div className="row">
-      {projects.map((project) => (
-        <div key={project.id} className="cols-sm">
+      {projects.map((project, i) => (
+        <div key={i} className="cols-sm">
           {project === projectBeingEdited ? 
             <ProjectForm 
             project={project}

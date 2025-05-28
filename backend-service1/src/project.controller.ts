@@ -1,38 +1,42 @@
-import { Controller, Get, Post, Req, Put, Delete, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Req, Put, Delete, Param, Query, Res, Body, HttpStatus } from '@nestjs/common';
 import { ProjectService } from './project.service';
-import {Project} from './utils/Project';
+import { IProject } from './interface/IProject.interface';
+import { ProjectDto } from './validations/Project.dto';
 
 @Controller('projects')
 export class ProjectController {
-  constructor(private readonly appService: ProjectService) {}
+  constructor(private readonly ProjectService: ProjectService) {}
 
   @Get()
-  getFilter(@Query() query: any): Project[] {
-    return this.appService.getProjects(query);
+  getFilter(@Query() query: any): Promise<IProject[]> {
+    return this.ProjectService.getProjects(query);
   }
 
   @Get()
-  getAll(): Project[] {
-    return this.appService.getProjects();
+  getAll(): Promise<IProject[]> {
+    return this.ProjectService.getProjects();
   }
 
 	@Put(':id')
-	setUpdate(@Req() req: Request, @Param() param: any): Project {
-		return this.appService.updateProjects(param.id, req.body);
+	setUpdate(@Req() req: Request, @Param() param: any): Promise<IProject> {
+		return this.ProjectService.updateProjects(param.id, req.body);
 	}
 
-  @Post() 
-  set(@Req() req: Request): Project{
-    return this.appService.create(req.body);
+  @Post()
+  async create(@Body() body: ProjectDto){
+      const data = await this.ProjectService.create(body);
+      return data;
   }
 
-  @Delete()
-  deleteId(@Param() param: any): string {
-    return this.appService.deleteId(param.id);
+  @Delete(':id')
+  deleteId(@Param() param: any): Promise<string> {
+    return this.ProjectService.deleteId(param.id);
   }
 
   @Get(":id")
-  findById (@Param() param: any): Project {
-    return this.appService.findById(param.id);
+  findById (@Param() param: any): Promise<IProject> {
+      const project = this.ProjectService.findById(param.id)
+      project.catch(console.log)
+    return project;
   }
 }

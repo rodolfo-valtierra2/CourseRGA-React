@@ -1,5 +1,5 @@
 import { Project } from './Project.ts';
-import ProjectList from './ProjectList.tsx';
+import ProjectList from './ProjectLIst.tsx';
 import {useEffect, useState} from 'react'
 import {projectAPI} from './ProjectAPI'
 
@@ -37,7 +37,7 @@ function ProjectsPage(){
 				.put(project)
 				.then(updatedProject => {
 					const updatedProjects = projects.map((p:Project) => 
-						p.id===project.id?new Project(updatedProject):p)
+						p._id===project._id?new Project(updatedProject):p)
 					setProjects(updatedProjects)
 				}).catch(e => {
 					if (e instanceof Error) 
@@ -55,7 +55,7 @@ function ProjectsPage(){
         <h1>Projects</h1>
         <ProjectList onSave={saveProject} 
         projects={projects} 
-        onLoading={loading}
+        isLoading={loading}
 				error={error}/>
         <div className="row">
           <div className="col-sm-12">

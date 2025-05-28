@@ -1,4 +1,4 @@
-import { Project } from './Project';
+import { Project } from './Project.ts';
 const baseUrl = 'http://localhost:3000';
 const url = `${baseUrl}/projects`;
 
@@ -41,6 +41,7 @@ function delay(ms: number) {
 }
 
 function convertToProjectModels(data: any[]): Project[] {
+  console.log(data)
   let projects: Project[] = data.map(convertToProjectModel);
   return projects;
 }
@@ -77,7 +78,7 @@ const projectAPI = {
       });
   },
 	put(project: Project) {
-    return fetch(`${url}/${project.id}`, {
+    return fetch(`${url}/${project._id}`, {
       method: 'PUT',
       body: JSON.stringify(project),
       headers: {
@@ -110,12 +111,22 @@ const projectAPI = {
         );
       });
 	},
-	find(id: number) {
+	find(id: string) {
     return fetch(`${url}/${id}`)
       .then(checkStatus)
       .then(parseJSON)
       .then(convertToProjectModel);
   },
+  deleteById(id: string) {
+    return fetch(`${url}/${id}`)
+    .then(parseJSON)
+    .then(console.log)
+    .catch(error => {
+      console.log(error)
+      alert("There was an error trying to delete")
+      throw new Error ("There was a error deleting")
+    })
+  }
 };
 
 export { projectAPI };
