@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, isNumber, IsString, Min, MinLength } from "class-validator";
+import { IsBoolean, IsDecimal, IsNotEmpty, isNumber, IsString, Min, MinLength } from "class-validator";
 
 export class ProjectDto {
     @IsString()
@@ -11,10 +11,6 @@ export class ProjectDto {
     @IsNotEmpty()
     readonly description: string;
 
-    @Min(1)
+    @IsDecimal()
     readonly budget: number;
-
-    readonly typeSignId: number;
-    readonly signed_at: string;
-    readonly imageUrl: string;
 }

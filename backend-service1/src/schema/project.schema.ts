@@ -3,17 +3,21 @@ import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose"
 @Schema() 
 export class Project {
     @Prop()
+    id:string;
+    @Prop()
     name: string;
     @Prop()
     description: string;
     @Prop()
     budget: number;
     @Prop()
-    active: boolean;
+    isActive: boolean;
     @Prop()
     imageUrl: string;
     @Prop()
-    signed: string;
+    signed_at: string;
+    @Prop()
+    typeContractId: string;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

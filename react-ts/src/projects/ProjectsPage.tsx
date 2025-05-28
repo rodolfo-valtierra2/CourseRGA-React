@@ -45,6 +45,13 @@ function ProjectsPage(){
 				})
     }
 
+    const deleteProject = (id) => {
+      const i = projects.findIndex(p => p._id===id)
+      setProjects(p => {
+        p.splice(i, 1)
+        return p;
+      })
+    }
     if (loading )
         return <div className="center-page">
             <span className="spinner primary"></span>
@@ -56,7 +63,8 @@ function ProjectsPage(){
         <ProjectList onSave={saveProject} 
         projects={projects} 
         isLoading={loading}
-				error={error}/>
+				error={error}
+        onDelete={deleteProject}/>
         <div className="row">
           <div className="col-sm-12">
             <div className="button-group fluid">

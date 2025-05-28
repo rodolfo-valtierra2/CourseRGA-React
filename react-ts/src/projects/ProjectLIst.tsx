@@ -7,11 +7,12 @@ interface ProjectListProps {
   projects: Project[];
 	isLoading: boolean;
 	onSave: (project:Project)=> void
-	error: project
+	error: Error,
+  onDelete: (id: number) => void
 }
 
-function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
-  const [projectBeingEdited, setProjectBeingEdited] = useState();  
+function ProjectList({ projects, onSave, isLoading, error, onDelete}: ProjectListProps) {
+  const [projectBeingEdited, setProjectBeingEdited] = useState<Project>();  
 
   const handleEdit = (project:Project) => {
      setProjectBeingEdited(project);
@@ -41,9 +42,11 @@ function ProjectList({ projects, onSave, isLoading, error}: ProjectListProps) {
             <ProjectForm 
             project={project}
               onCancel={cancelEdit} 
-              onSave={onSave} />
+              onSave={onSave}/>
            : 
-            <ProjectCard project={project} onEdit={handleEdit} />
+            <ProjectCard project={project} 
+              onEdit={handleEdit} 
+              onDelete={onDelete} />
           }
         </div>
       ))}
