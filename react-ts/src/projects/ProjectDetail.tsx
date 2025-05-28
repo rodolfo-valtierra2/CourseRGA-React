@@ -20,7 +20,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             <p>{project.description}</p>
             <p>Budget : {project.budget}</p>
 
-            <p>Signed: {project.contractSignedOn.toLocaleDateString()}</p>
+            <p>Signed: {project.signed_at.toLocaleDateString()}</p>
             <p>
               <mark className="active">
                 {' '}

@@ -41,7 +41,6 @@ function delay(ms: number) {
 }
 
 function convertToProjectModels(data: any[]): Project[] {
-  console.log(data)
   let projects: Project[] = data.map(convertToProjectModel);
   return projects;
 }
@@ -118,7 +117,7 @@ const projectAPI = {
       .then(convertToProjectModel);
   },
   deleteById(id: string) {
-    return fetch(`${url}/${id}`)
+    return fetch(`${url}/${id}`, {method: 'DELETE'})
     .then(parseJSON)
     .then(console.log)
     .catch(error => {

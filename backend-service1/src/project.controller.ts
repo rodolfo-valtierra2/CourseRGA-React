@@ -35,9 +35,8 @@ export class ProjectController {
   }
 
   @Get(":id")
-  findById (@Param('id') param: string): Promise<IProject> {
-      const project = this.ProjectService.findById(param)
-      project.catch(console.log)
+  findById (@Param('id') id: string): Promise<IProject> {
+    const project = this.ProjectService.findById(id)
     return project;
   }
 }

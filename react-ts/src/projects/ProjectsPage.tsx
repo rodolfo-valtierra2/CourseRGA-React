@@ -36,9 +36,9 @@ function ProjectsPage(){
         projectAPI
 				.put(project)
 				.then(updatedProject => {
-					const updatedProjects = projects.map((p:Project) => 
-						p._id===project._id?new Project(updatedProject):p)
-					setProjects(updatedProjects)
+					const updatedProjects = new Project(updatedProject)
+          projects.push(updatedProjects)
+					setProjects({...projects})
 				}).catch(e => {
 					if (e instanceof Error) 
 						setError(e.message)
@@ -46,10 +46,12 @@ function ProjectsPage(){
     }
 
     const deleteProject = (id) => {
+      
       const i = projects.findIndex(p => p._id===id)
+      console.log(i)
       setProjects(p => {
         p.splice(i, 1)
-        return p;
+        return [...p];
       })
     }
     if (loading )

@@ -12,7 +12,6 @@ export class Project {
   }
 
   constructor(initializer?: any) {
-    console.log(initializer)
     if (!initializer) return;
     if (initializer._id) this._id = initializer._id;
     if (initializer.name) this.name = initializer.name;
