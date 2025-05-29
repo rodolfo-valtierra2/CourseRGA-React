@@ -20,11 +20,11 @@ function ProjectCard (props: Props) {
     };
 
     const handleDelete = () => {
-      // projectAPI.deleteById(project._id)
-      // .then (() => {
+      projectAPI.deleteById(project._id)
+      .then (() => {
          onDelete(project._id)
-      // })
-      // .catch(console.log)
+      })
+      .catch(console.log)
 
     }
 

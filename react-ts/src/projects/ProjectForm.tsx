@@ -22,7 +22,9 @@ function ProjectForm({ onCancel, onSave, project: initialProject }: ProjectFormP
     }
 
     const addValues = (event: SyntheticEvent) => {
-        const { name, value, checked, type } = event.target as HTMLInputElement
+        let { name, value, checked, type } = event.target as HTMLInputElement
+				value = Number.parseInt(value) || value
+
         setProject((p: Project) => {
             p[name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))

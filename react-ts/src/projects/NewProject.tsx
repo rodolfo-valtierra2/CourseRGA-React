@@ -27,7 +27,9 @@ function NewProject() {
     }
 
     const addValues = (event: SyntheticEvent) => {
-        const { value, checked, type, name } = event.target as HTMLInputElement
+       let { value, checked, type, name } = event.target as HTMLInputElement
+				value = Number.parseInt(value) || value
+
         setProject((p: Project) => {
             p[name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))

@@ -119,7 +119,7 @@ const projectAPI = {
   deleteById(id: string) {
     return fetch(`${url}/${id}`, {method: 'DELETE'})
     .then(parseJSON)
-    .then(console.log)
+    .then((res) => console.log(res))
     .catch(error => {
       console.log(error)
       alert("There was an error trying to delete")

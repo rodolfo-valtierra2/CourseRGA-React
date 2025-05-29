@@ -46,14 +46,11 @@ function ProjectsPage(){
     }
 
     const deleteProject = (id) => {
-      
-      const i = projects.findIndex(p => p._id===id)
-      console.log(i)
       setProjects(p => {
-        p.splice(i, 1)
-        return [...p];
+        return [...p.filter(p => p._id!==id)];
       })
     }
+
     if (loading )
         return <div className="center-page">
             <span className="spinner primary"></span>
