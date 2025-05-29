@@ -1,4 +1,4 @@
-import type { Project } from './Project';
+import type { Project } from '../utils/Project';
 import { useState } from 'react'
 import type { SyntheticEvent } from 'react'
 

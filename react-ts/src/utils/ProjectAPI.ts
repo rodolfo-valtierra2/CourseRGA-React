@@ -17,6 +17,7 @@ function checkStatus(response: any) {
   if (response.ok) {
     return response;
   } else {
+    console.log(response)
     const httpErrorInfo = {
       status: response.status,
       statusText: response.statusText,
@@ -50,21 +51,8 @@ function convertToProjectModel(item: any): Project {
 }
 
 const projectAPI = {
-  getAll() {
-    return fetch(url)
-      .then(delay(600))
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(convertToProjectModels)
-      .catch((error: TypeError) => {
-        console.log('log client error ' + error);
-        throw new Error(
-          'There was an error retrieving the projects. Please try again.'
-        );
-      });
-  },
-  get(page = 1, limit = 20) {
-    return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=name`)
+  get(page = 1,sort='', limit = 20) {
+    return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=${sort}`)
       .then(delay(600))
       .then(checkStatus)
       .then(parseJSON)
@@ -101,14 +89,6 @@ const projectAPI = {
         'Content-Type': 'application/json'
       }
     })
-      .then(checkStatus)
-      .then(parseJSON)
-      .catch((error: TypeError) => {
-        console.log('log client error ' + error);
-        throw new Error(
-          'There was an error updating the project. Please try again.'
-        );
-      });
 	},
 	find(id: string) {
     return fetch(`${url}/${id}`)
@@ -118,8 +98,6 @@ const projectAPI = {
   },
   deleteById(id: string) {
     return fetch(`${url}/${id}`, {method: 'DELETE'})
-    .then(parseJSON)
-    .then((res) => console.log(res))
     .catch(error => {
       console.log(error)
       alert("There was an error trying to delete")

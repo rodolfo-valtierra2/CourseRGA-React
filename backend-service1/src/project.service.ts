@@ -10,11 +10,15 @@ export class ProjectService {
   constructor(@InjectModel('Project') private projectModel: Model<IProject>){}
 
   async getProjects(query=null): Promise<IProject[]>{
-    if (!query)
-       return await this.projectModel.find();
     let {_page, _limit, _sort} = query;
-    
-    const projects = await this.projectModel.find().skip(_page).limit(_limit);
+    let q = this.projectModel;
+
+    if (_sort)
+      q.find({name: {$regex: _sort}})
+    else 
+      q.find();
+
+    const projects = await q.skip(_page).limit(_limit);
     if(!projects || !projects.length)
       throw new NotFoundException('Project data not found');
 
@@ -36,9 +40,6 @@ export class ProjectService {
 
   async deleteId(id): Promise<string> {
     const deleted = await this.projectModel.findByIdAndDelete(id).exec();
-
-    if(!deleted)
-      throw new NotFoundException("Delete id not found");
 
     return 'id deleted';
   }

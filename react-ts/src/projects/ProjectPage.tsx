@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { projectAPI } from './ProjectAPI.ts';
+import { projectAPI } from '../utils/ProjectAPI.ts';
 import ProjectDetail from './ProjectDetail';
-import type { Project } from './Project.ts';
+import type { Project } from '../utils/Project.ts';
 import { useParams } from 'react-router';
 
 function ProjectPage() {
@@ -41,7 +41,7 @@ function ProjectPage() {
             <div className="card large error">
               <section>
                 <p>
-                  <span className="icon-alert inverse "></span> {error}
+                  <span className="icon-alert inverse "></span> {error.message}
                 </p>
               </section>
             </div>

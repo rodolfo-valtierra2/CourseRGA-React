@@ -1,13 +1,14 @@
-import { Project } from './Project.ts';
+import { Project } from '../utils/Project.ts';
 import ProjectList from './ProjectLIst.tsx';
-import {useEffect, useState} from 'react'
-import {projectAPI} from './ProjectAPI'
+import {useEffect, useState, type SyntheticEvent} from 'react'
+import {projectAPI} from '../utils/ProjectAPI.ts'
 
 function ProjectsPage(){
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(false)
+    const [isFetching, setFetching] = useState(false)
     const [error, setError] = useState<string | undefined>(undefined)
-    const [currentPage, setCurrentPage ] = useState(1);
+    const [currentPage, setCurrentPage ] = useState(0);
 
     useEffect(() => {
         async function loadProjects() {
@@ -38,17 +39,25 @@ function ProjectsPage(){
 				.then(updatedProject => {
 					const updatedProjects = new Project(updatedProject)
           projects.push(updatedProjects)
-					setProjects({...projects})
+					setProjects([...projects])
 				}).catch(e => {
 					if (e instanceof Error) 
 						setError(e.message)
 				})
     }
 
-    const deleteProject = (id) => {
-      setProjects(p => {
-        return [...p.filter(p => p._id!==id)];
-      })
+    const deleteProject = (id:string) => {
+      setProjects([...projects.filter(p => p._id!==id)])
+    }
+
+    const searchName = (event: SyntheticEvent) => {
+      const search = event.target.value;
+
+      if (isFetching){
+        setTimeout(() => {
+          projectAPI.get()
+        }, 500)
+      }
     }
 
     if (loading )
@@ -59,11 +68,12 @@ function ProjectsPage(){
 
     return <>
         <h1>Projects</h1>
+        <input placeholder='Search name' onChange={searchName}/>
         <ProjectList onSave={saveProject} 
-        projects={projects} 
-        isLoading={loading}
-				error={error}
-        onDelete={deleteProject}/>
+          projects={projects} 
+          isLoading={loading}
+          error={error}
+          onDelete={deleteProject}/>
         <div className="row">
           <div className="col-sm-12">
             <div className="button-group fluid">

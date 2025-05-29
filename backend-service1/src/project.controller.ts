@@ -26,7 +26,11 @@ export class ProjectController {
 
   @Post()
   async create(@Body() body: ProjectDto){
-    return await this.ProjectService.create(body);
+    return await this.ProjectService.create({
+      ...body, 
+      name: body.name.trim(),
+      description: body.description.trim()
+    });
   }
 
   @Delete(':id')

@@ -1,6 +1,7 @@
-import { Project } from './Project';
+import { Project } from '../utils/Project';
 import {Link} from 'react-router'
-import { projectAPI } from './ProjectAPI';
+import { projectAPI } from '../utils/ProjectAPI';
+import { useState } from 'react';
 
 function formatDescription(description:string) {
   return description.substring(0, 60) + '...';
@@ -9,26 +10,29 @@ function formatDescription(description:string) {
 interface Props {
 	project: Project;
 	onEdit: (project:Project) => void;
-  onDelete: any;
+  onDelete: (id:string | undefined) => void;
+  isDeleted: (name:string) => void;
 }
 
 function ProjectCard (props: Props) {
-    const {project, onEdit, onDelete} = props
+    const {project, onEdit, onDelete, isDeleted} = props
 
     const handleEditClick = () => {
       onEdit(project);
     };
 
-    const handleDelete = () => {
-      projectAPI.deleteById(project._id)
-      .then (() => {
-         onDelete(project._id)
-      })
-      .catch(console.log)
-
+    const handleDelete = async () => {
+      isDeleted(project.name)
+      const deleted:any = await projectAPI.deleteById(project._id)
+      if (deleted.ok){
+        onDelete(project._id)
+        setTimeout( () => 
+          isDeleted('')
+        , 1000);
+      }
     }
 
-    return <div className="card">
+    return <div className="card" style={{border: 'black 2px solid'}}>
       <img src={project.imageUrl} alt={project.name} />
       <section className="section dark">
 				<Link to={`/projects/${project._id}`}>
