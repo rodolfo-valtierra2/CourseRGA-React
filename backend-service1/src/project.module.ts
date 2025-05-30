@@ -1,20 +1,27 @@
 import { Module } from '@nestjs/common';
 import {MongooseModule } from '@nestjs/mongoose';
-import { ProjectController } from './project.controller';
-import { ProjectService } from './project.service';
-import Schema from './schema'
+import { UserModule } from './user.module';
+import {ConfigModule} from '@nestjs/config';
+import Joi from 'joi';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017',
-      {
-        dbName: 'Projects'
-      }
-    ),
-    MongooseModule.forFeature(Schema)
-  ],
-  controllers: [ProjectController],
-  providers: [ProjectService],
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string().required(),
+        ACCESS_TOKEN_SECRET: Joi.string().required(),
+        ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
+        REFRESH_TOKEN_SECRET: Joi.string().required(),
+        REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
+      }),
+      validationOptions: {
+        allowUnknown: true,
+        abortEarly: false,
+      },
+    }),
+    MongooseModule.forRoot(process.env),
+    UserModule
+  ]
 })
 
 export class ProjectModule {}

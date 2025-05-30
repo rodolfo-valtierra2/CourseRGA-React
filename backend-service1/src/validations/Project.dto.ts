@@ -1,5 +1,4 @@
-import { UsePipes } from "@nestjs/common";
-import {IsNumber, IsBoolean, IsDecimal, IsNotEmpty, isNumber, IsString, Min, MinLength } from "class-validator";
+import {IsNumber, IsNotEmpty, IsString, MinLength } from "class-validator";
 
 export class ProjectDto {
     @IsString()

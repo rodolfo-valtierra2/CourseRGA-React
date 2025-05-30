@@ -1,22 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { IProject } from './interface/IProject.interface';
-import { ProjectDto } from './validations/Project.dto';
+import { IProject } from '../interfaces/IProject.interface';
+import { ProjectDto } from '../validations/Project.dto';
 //let {MOCK_PROJECTS} = require('./utils/MockProjects')
 
 @Injectable()
 export class ProjectService {
   constructor(@InjectModel('Project') private projectModel: Model<IProject>){}
 
-  async getProjects(query=null): Promise<IProject[]>{
+  async getProjects(query={_page:0, _limit:0, _sort:''}): Promise<IProject[]>{
     let {_page, _limit, _sort} = query;
-    let q = this.projectModel;
+    let q = this.projectModel.find();
 
     if (_sort)
       q.find({name: {$regex: _sort}})
-    else 
-      q.find();
 
     const projects = await q.skip(_page).limit(_limit);
     if(!projects || !projects.length)
