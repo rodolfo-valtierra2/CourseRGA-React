@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import {MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from './user.module';
+import { UserModule } from './users/users.module';
 import {ConfigModule} from '@nestjs/config';
 import Joi from 'joi';
 

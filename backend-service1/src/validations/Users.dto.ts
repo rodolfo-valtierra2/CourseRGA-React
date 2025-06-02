@@ -1,10 +1,11 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
-import { IsString } from "class-validator";
+import { IsAlpha, IsEmail, IsString } from "class-validator";
 
 export class UserDto {
   @IsString()
+	@IsAlpha()
   name: string;
   @IsString()
+	@IsEmail()
   email: string;
   @IsString()
   password: string;
