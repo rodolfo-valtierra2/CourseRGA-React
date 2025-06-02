@@ -1,16 +1,20 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema, User } from '../schemas/users.schema';
-import { AuthController } from '../auth/users.controller';
-import { AuthService } from '../auth/users.service';
+import { UsersController } from '../controllers/users.controller';
+import { UsersService } from '../services/users.service';
+import { User, UserSchema } from 'src/schemas/users.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{name: User.name, schema: UserSchema}])
+    MongooseModule.forRoot('mongodb://localhost:27017',
+          {
+            dbName: 'Projects'
+          }
+        ),
+        MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
   ],
-  controllers: [AuthController],
-  providers: [UsersService],
-  exports: [AuthService]
+  controllers: [UsersController],
+  providers: [UsersService]
 })
 
 export class UsersModule {}

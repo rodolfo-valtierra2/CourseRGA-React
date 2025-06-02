@@ -5,9 +5,11 @@ export class UserDto {
 	@IsAlpha()
   name: string;
   @IsString()
+  password: string;
+
+  @IsString()
 	@IsEmail()
   email: string;
-  @IsString()
-  password: string;
+  
   refreshToken?: string;
 }

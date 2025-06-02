@@ -1,13 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { IProject } from '../interfaces/IProject.interface';
 import { ProjectDto } from '../validations/Project.dto';
+import { Project } from 'src/schemas/project.schema';
 //let {MOCK_PROJECTS} = require('./utils/MockProjects')
 
 @Injectable()
 export class ProjectService {
-  constructor(@InjectModel('Project') private projectModel: Model<IProject>){}
+  constructor(@InjectModel(Project.name) private projectModel: Model<IProject>){}
 
   async getProjects(query={_page:0, _limit:0, _sort:''}): Promise<IProject[]>{
     let {_page, _limit, _sort} = query;

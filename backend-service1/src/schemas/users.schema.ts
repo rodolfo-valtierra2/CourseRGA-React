@@ -5,7 +5,7 @@ import { Exclude } from "class-transformer";
 export type UserDocument = User & Document;
 
 @Schema()
-export class User {
+export class User  {
   @Exclude()
   _id: Types.ObjectId;
 
