@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { User, UserDocument } from 'src/schemas/users.schema';
-import { UsersService } from 'src/services/users.service';
+import { UserDocument } from 'src/schemas/users.schema';
+import { UsersService } from './users.service';
 import { AccessTokenGuard } from 'src/common/guards/access_token';
 import { UserDto } from 'src/validations/Users.dto';
 
