@@ -1,8 +1,8 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get } from "@nestjs/common";
+import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get, Req } from "@nestjs/common";
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/validations/Users.dto';
 import { AuthUser } from "src/common/decorators/auth_user";
-import { AccessTokenGuard } from "src/tokenAccess/guard.access_token";
+import { AccessTokenGuard } from "src/common/guards/access_token";
 import { RefreshTokenGuard } from "src/common/guards/refresh_token";
 import { SignInDto } from "src/validations/SignIn.dto";
 
@@ -28,8 +28,10 @@ export class AuthController {
 
 	@UseGuards(AccessTokenGuard)
 	@Get('logout')
-	logout(@AuthUser('sub') sub: string) {
-		return this.authService.logout(sub);
+	async logout(@AuthUser('sub') sub: string, @Req() req) {
+		const logout = await this.authService.logout(sub);
+		req.remove('Authorization');
+		return logout;
 	}
 	@UseGuards(RefreshTokenGuard)
 	@Get('refresh')

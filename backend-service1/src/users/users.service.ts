@@ -26,7 +26,7 @@ export class UsersService {
         return this.userModel.findOne({ email }).exec();
     }
 
-    async update(id: string, updateUserDto: UserDto): Promise<boolean> {
+    async update(id: string, updateUserDto: UserDto | {}): Promise<boolean> {
         await this.userModel.findByIdAndUpdate(id, {$set: updateUserDto});
         return true;
     }
