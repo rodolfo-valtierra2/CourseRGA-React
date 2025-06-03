@@ -1,10 +1,10 @@
 import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IUser } from 'src/interfaces/IUser.interface';
-import { UsersService } from 'src/services/users.service';
+import { UsersService } from 'src/users/users.service';
 import { UserDto } from 'src/validations/Users.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import argon2 from 'argon2';
+import * as argon2 from 'argon2';
 import {SignInDto} from '../validations/SignIn.dto'
 import { IToken } from 'src/interfaces/IToken.interface';
 
@@ -16,16 +16,16 @@ export class AuthService {
         private configService: ConfigService,
     ) { }
 
-    async signUp(createUserDto: UserDto): Promise<IUser> {
-        const userExists = await this.usersService.findByEmail(createUserDto.email);
+    async signUp(userForm: UserDto): Promise<IUser> {
+        const userExists = await this.usersService.findByEmail(userForm.email);
 
         if (userExists) {
             throw new BadRequestException('User already exists');
         }
 
-        const hash = await argon2.hash(createUserDto.password);
+        const hash = await argon2.hash(userForm.password);
         const newUser = await this.usersService.create({
-            ...createUserDto,
+            ...userForm,
             password: hash,
         });
 

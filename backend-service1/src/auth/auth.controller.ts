@@ -8,13 +8,17 @@ import { SignInDto } from "src/validations/SignIn.dto";
 
 @Controller('auth')
 export class AuthController {
-
 	constructor(private authService: AuthService) { }
 
+  @Get()
+	check () {
+		return "working"
+	}
+
 	@HttpCode(HttpStatus.OK)
-	@Post('login')
+	@Post('signup')
 	signIn(@Body() signInForm: UserDto) {
-		return this.authService.signIn(signInForm);
+		return this.authService.signUp(signInForm);
 	}
 
 	@Post('signin')
