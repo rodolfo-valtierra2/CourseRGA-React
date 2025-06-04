@@ -8,6 +8,13 @@ interface ProjectFormProps {
     project: Project;
 }
 
+interface valueEvent {
+name:any;
+value: number|string; 
+checked: boolean;
+type:string;
+}
+
 function ProjectForm({ onCancel, onSave, project: initialProject }: ProjectFormProps) {
     const [project, setProject] = useState(initialProject)
     const [errors, setErrors] = useState({
@@ -22,10 +29,10 @@ function ProjectForm({ onCancel, onSave, project: initialProject }: ProjectFormP
     }
 
     const addValues = (event: SyntheticEvent) => {
-        let { name, value, checked, type } = event.target as HTMLInputElement
+        let { name, value, checked, type }: valueEvent = event.target as HTMLInputElement
 				value = Number.parseInt(value) || value
 
-        setProject((p: Project) => {
+        setProject((p: any) => {
             p[name] = type == 'checkbox' ? checked : value;
             setErrors(() => validate(p))
             return { ...p };
@@ -81,10 +88,10 @@ function ProjectForm({ onCancel, onSave, project: initialProject }: ProjectFormP
         </div>
         }
         <label htmlFor="isActive">Active?</label>
-        <input value={project.isActive} onChange={addValues} type="checkbox" name="isActive" />
+        <input value={project.isActive+""} onChange={addValues} type="checkbox" name="isActive" />
 
         <div className="input-group">
-            <button className="primary bordered medium" onClick={onSave}>Save</button>
+            <button className="primary bordered medium" onClick={() => onSave(project)}>Save</button>
             <span></span>
             <button type="button" className="bordered medium"
                 onClick={onCancel}>

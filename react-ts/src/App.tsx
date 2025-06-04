@@ -1,7 +1,7 @@
 import ProjectsPage from './projects/ProjectsPage.tsx'
 import './App.css'
 import { BrowserRouter, Routes, Route, NavLink} from 'react-router';
-import HomePage from './home/HomePage.tsx';
+import HomePage from './Home/HomePage.tsx';
 import ProjectPage from './projects/ProjectPage.tsx'
 import NewProject from './projects/NewProject.tsx'
 

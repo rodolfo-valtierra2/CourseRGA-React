@@ -96,7 +96,7 @@ const projectAPI = {
       .then(parseJSON)
       .then(convertToProjectModel);
   },
-  deleteById(id: string) {
+  deleteById(id: string | undefined) {
     return fetch(`${url}/${id}`, {method: 'DELETE'})
     .catch(error => {
       console.log(error)

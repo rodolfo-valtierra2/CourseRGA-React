@@ -6,8 +6,8 @@ import {projectAPI} from '../utils/ProjectAPI.ts'
 function ProjectsPage(){
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(false)
-    const [isFetching, setFetching] = useState(false)
-    const [error, setError] = useState<string | undefined>(undefined)
+    const [isFetching] = useState(false)
+    const [error, setError] = useState<Error | undefined>(undefined)
     const [currentPage, setCurrentPage ] = useState(0);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function ProjectsPage(){
                 setProjects(data);
             }catch (e) {
 							if(e instanceof Error)
-                setError(e.message);
+                setError(e);
             } finally {
                 setLoading(false);
             }
@@ -33,7 +33,7 @@ function ProjectsPage(){
         setCurrentPage((page) => page+1)
     }
 
-    const saveProject = (project: Project) => {
+    const saveProject = (project: Project) => { 
         projectAPI
 				.put(project)
 				.then(updatedProject => {
@@ -42,20 +42,20 @@ function ProjectsPage(){
 					setProjects([...projects])
 				}).catch(e => {
 					if (e instanceof Error) 
-						setError(e.message)
+						setError(e)
 				})
     }
 
-    const deleteProject = (id:string) => {
+    const deleteProject = (id:string | undefined) => {
       setProjects([...projects.filter(p => p._id!==id)])
     }
 
     const searchName = (event: SyntheticEvent) => {
-      const search = event.target.value;
+      const search = (event.target as HTMLInputElement).value; 
 
       if (isFetching){
         setTimeout(() => {
-          projectAPI.get()
+          projectAPI.get(0,search)
         }, 500)
       }
     }

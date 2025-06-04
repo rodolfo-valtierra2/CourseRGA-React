@@ -4,6 +4,13 @@ import type { SyntheticEvent } from 'react';
 import { projectAPI } from '../utils/ProjectAPI';
 import { useNavigate } from 'react-router';
 
+interface valueEvent {
+	name:any;
+	value: number|string; 
+	checked: boolean;
+	type:string;
+}
+
 function NewProject() {
     const navigate = useNavigate();
     const [project, setProject] = useState(new Project())
@@ -24,10 +31,10 @@ function NewProject() {
             .catch(e => console.log(e));
     }
 
-    const groupErrors = (messages) => {
+    const groupErrors = (messages: string[]) => {
         const keys = Object.keys(errors)
-        const errorsMessages = messages.reduce((acc, el: string) => {
-            for (let k: string of keys) {
+        const errorsMessages = messages.reduce((acc:any, el: string) => {
+            for (let k of keys) {
                 if (el.includes(k)) {
                     acc[k] = el;
                     break;
@@ -44,11 +51,11 @@ function NewProject() {
     }
 
     const addValues = (event: SyntheticEvent) => {
-        const { value, checked, type, name } = event.target as HTMLInputElement
-        let data = Number.parseInt(value) || value
+        let { value, checked, type, name }: valueEvent = event.target as HTMLInputElement
+        value = Number.parseInt(value) || value
 
-        setProject((p: Project) => {
-            p[name] = type == 'checkbox' ? checked : data;
+        setProject((p: any) => {
+            p[name] = type == 'checkbox' ? checked : value;
             //setErrors(() => validate(p))
             return { ...p };
         })
@@ -90,7 +97,7 @@ function NewProject() {
         </mark>
         }
         <label htmlFor="description">Description</label>
-        <textarea rows="1" value={project.description} onChange={addValues} name="description" placeholder="enter description"></textarea>
+        <textarea rows={1} value={project.description} onChange={addValues} name="description" placeholder="enter description"></textarea>
         {errors.description && <p><mark className="secondary" >
             {errors.description}
         </mark></p>
@@ -105,7 +112,7 @@ function NewProject() {
         }
         <div>
         <label htmlFor="isActive">Active?</label>
-        <input value={project.isActive} onChange={addValues} type="checkbox" name="isActive" />
+        <input value={project.isActive+''} onChange={addValues} type="checkbox" name="isActive" />
         </div>
         <div>
         <input style={{width: '40%'}} className="primary bordered medium" type="submit" value="save" />

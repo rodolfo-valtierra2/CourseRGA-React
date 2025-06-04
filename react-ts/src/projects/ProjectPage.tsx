@@ -7,8 +7,8 @@ import { useParams } from 'react-router';
 function ProjectPage() {
   const [loading, setLoading] = useState(false);
   const [project, setProject] = useState<Project | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const params = useParams();
+  const [error, setError] = useState<Error | null>(null);
+  const params: any = useParams();
 
   useEffect(() => {
     setLoading(true);

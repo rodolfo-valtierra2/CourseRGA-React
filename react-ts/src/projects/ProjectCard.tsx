@@ -1,7 +1,6 @@
 import { Project } from '../utils/Project';
 import {Link} from 'react-router'
 import { projectAPI } from '../utils/ProjectAPI';
-import { useState } from 'react';
 
 function formatDescription(description:string) {
   return description.substring(0, 60) + '...';

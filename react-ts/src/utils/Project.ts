@@ -7,9 +7,6 @@ export class Project {
   signed_at: Date = new Date();
   budget: number = 0;
   isActive: boolean = false;
-  get isNew(): boolean {
-    return this._id === undefined;
-  }
 
   constructor(initializer?: any) {
     if (!initializer) return;

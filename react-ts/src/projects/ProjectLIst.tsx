@@ -7,12 +7,12 @@ interface ProjectListProps {
   projects: Project[];
   isLoading: boolean;
   onSave: (project: Project) => void
-  error: Error,
-  onDelete: (id: number) => void
+  error: Error | undefined,
+  onDelete: (id: string | undefined) => void
 }
 
 function ProjectList({ projects, onSave, isLoading, error, onDelete }: ProjectListProps) {
-  const [projectBeingEdited, setProjectBeingEdited] = useState<Project>();
+  const [projectBeingEdited, setProjectBeingEdited] = useState<Project>(new Project());
   const [isDeleted, setDeleted] = useState('')
 
   const handleEdit = (project: Project) => {
@@ -25,7 +25,7 @@ function ProjectList({ projects, onSave, isLoading, error, onDelete }: ProjectLi
 
   const handleSave = () => {
     onSave(projectBeingEdited);
-    setProjectBeingEdited(null);
+    setProjectBeingEdited(new Project());
   }
 
   if (isLoading)
@@ -34,7 +34,7 @@ function ProjectList({ projects, onSave, isLoading, error, onDelete }: ProjectLi
         <section>
           <p>
             <span className="icon-alert inverse "></span>
-            {error}
+            {error?.message}
           </p>
         </section>
       </div>
