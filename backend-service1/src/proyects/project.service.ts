@@ -18,10 +18,8 @@ export class ProjectService {
       q.find({name: {$regex: _sort}})
 
     const projects = await q.skip(_page).limit(_limit);
-    if(!projects || !projects.length)
-      throw new NotFoundException('Project data not found');
 
-    return projects;
+    return projects || [];
   }
 
   async updateProjects(id:string, data: any): Promise<IProject>  {

@@ -2,13 +2,13 @@ import { Controller, Get, Post, Put, Delete, Param, Query, Res, Body, HttpStatus
 import { ProjectService } from './project.service';
 import { IProject } from '../interfaces/IProject.interface';
 import { ProjectDto } from '../validations/Project.dto';
-import { AccessTokenGuard } from '../tokenAccess/guard.access_token';
+import { AccessTokenGuard } from 'src/common/guards/access_token';
 
 @UseGuards(AccessTokenGuard)
 @Controller('proyects')
 export class ProjectController {
   constructor(private readonly ProjectService: ProjectService) {}
-
+  
   @Get()
   getFilter(@Query() query): Promise<IProject[]> {
     return this.ProjectService.getProjects(query);

@@ -1,7 +1,7 @@
 import { Project } from '../utils/Project.ts';
 import ProjectList from './ProjectLIst.tsx';
 import {useEffect, useState, type SyntheticEvent} from 'react'
-import {projectAPI} from '../utils/ProjectAPI.ts'
+import {projectAPI} from '../Requests/ProjectAPI.ts'
 
 function ProjectsPage(){
     const [projects, setProjects] = useState<Project[]>([]);

@@ -1,37 +1,35 @@
 import ProjectsPage from './projects/ProjectsPage.tsx'
 import './App.css'
-import { BrowserRouter, Routes, Route, NavLink} from 'react-router';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import HomePage from './Home/HomePage.tsx';
 import ProjectPage from './projects/ProjectPage.tsx'
 import NewProject from './projects/NewProject.tsx'
+import { useState } from 'react';
+import {Provider} from './SessionContext'
+import LogIn from './LogIn'
 
 function App() {
+	const [user, setUser] = useState({});
 
-  return <BrowserRouter>
+	return <BrowserRouter>
 		<header className="sticky">
-			<span className="logo">
-				<img src="/assets/logo-3.svg" alt="logo" width="49" height="99" />
-			</span>
-			<NavLink to="/"  className="button rounded">
-				<span className="icon-home"></span>
-				Home
-			</NavLink>
-			<NavLink to="/projects" className="button rounded">
-				Projects
-			</NavLink>
-			<NavLink to="/NewProject" className="button rounded">
-				New Project
-			</NavLink>
+			<Provider value={{user, setUser}}>
+				<span className="logo">
+					<img src="/assets/logo-3.svg" alt="logo" width="49" height="99" />
+				</span>
+				<div className="container">
+					<Routes>
+						<LogIn>
+							<Route path="/" element={<HomePage />} />
+							<Route path="/projects" element={<ProjectsPage />} />
+							<Route path="/projects/:id" element={<ProjectPage />} />
+							<Route path="/NewProject" element={<NewProject />} />
+						</LogIn>
+					</Routes>
+				</div>
+			</Provider>
 		</header>
-		<div className="container">
-			<Routes>
-				<Route path="/" element={<HomePage/>}/>
-				<Route path="/projects" element={<ProjectsPage/>}/>
-				<Route path="/projects/:id" element={<ProjectPage/>}/>				
-				<Route path="/NewProject" element={<NewProject/>}/>				
-			</Routes>
-			</div>
-		</BrowserRouter>
+	</BrowserRouter>
 }
 
 export default App

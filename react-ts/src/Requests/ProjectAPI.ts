@@ -1,4 +1,4 @@
-import { Project } from './Project.ts';
+import { Project } from '../utils/Project.ts';
 const baseUrl = 'http://localhost:3000';
 const url = `${baseUrl}/projects`;
 

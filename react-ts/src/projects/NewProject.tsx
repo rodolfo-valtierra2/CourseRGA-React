@@ -1,7 +1,7 @@
 import { Project } from '../utils/Project';
 import { useState } from 'react'
 import type { SyntheticEvent } from 'react';
-import { projectAPI } from '../utils/ProjectAPI';
+import { projectAPI } from '../Requests/ProjectAPI';
 import { useNavigate } from 'react-router';
 
 interface valueEvent {

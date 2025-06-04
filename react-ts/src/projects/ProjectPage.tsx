@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { projectAPI } from '../utils/ProjectAPI.ts';
+import { projectAPI } from '../Requests/ProjectAPI.ts';
 import ProjectDetail from './ProjectDetail';
 import type { Project } from '../utils/Project.ts';
 import { useParams } from 'react-router';
