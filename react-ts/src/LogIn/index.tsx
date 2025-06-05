@@ -12,6 +12,6 @@ export default function index (props: any) {
         
     return <Routes>
         <Route path="/" element={<SignIn changeSession={setSession} session={session}/>}/>
-        <Route path="/register" element={<SignUp changeSession={setSession} session={session}/>}/>
+        <Route path="/register" element={<SignUp />}/>
     </Routes>
 }

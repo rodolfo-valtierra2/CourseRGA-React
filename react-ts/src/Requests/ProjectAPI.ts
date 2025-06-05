@@ -50,6 +50,10 @@ function convertToProjectModel(item: any): Project {
   return new Project(item);
 }
 
+function getToken () {
+  return window.localStorage.token;
+}
+
 const projectAPI = {
   get(page = 1,sort='', limit = 20) {
     return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=${sort}`)
@@ -69,6 +73,7 @@ const projectAPI = {
       method: 'PUT',
       body: JSON.stringify(project),
       headers: {
+        'Authorization': 'bearer '+getToken(),
         'Content-Type': 'application/json'
       }
     })
@@ -86,12 +91,15 @@ const projectAPI = {
       method: 'POST',
       body: JSON.stringify(project),
       headers: {
+        'Authorization': 'bearer '+getToken(),
         'Content-Type': 'application/json'
       }
     })
 	},
 	find(id: string) {
-    return fetch(`${url}/${id}`)
+    return fetch(`${url}/${id}`, {
+      headers: {'Authorization': 'bearer '+getToken(),}
+    })
       .then(checkStatus)
       .then(parseJSON)
       .then(convertToProjectModel);
