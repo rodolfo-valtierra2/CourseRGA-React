@@ -1,11 +1,13 @@
-import { Children, createContext} from "react";
+import { createContext, useState} from "react";
+import { Routes } from "react-router";
 
 export const Session = createContext({});
 
-export const Provider = (props: any) => {
-
-    return <Session.Provider {...props.value}>
-        {props.Children}
+export function Provider (props: any) {
+    const [session, setSession] = useState({})
+    
+    return <Session.Provider value={[session, setSession]}>
+            {props.children}
     </Session.Provider>
 
 }
