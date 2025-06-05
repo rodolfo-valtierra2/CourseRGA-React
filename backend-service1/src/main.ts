@@ -3,13 +3,11 @@ import { ProjectModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './common/interceptors/tranform';
-import { LoggingInterceptor } from './Interceptor/loggin.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProjectModule, {cors: true});
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalInterceptors(new LoggingInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('Cats example')

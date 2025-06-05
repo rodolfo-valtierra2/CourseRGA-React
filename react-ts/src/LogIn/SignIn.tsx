@@ -1,9 +1,11 @@
 import {  type SyntheticEvent } from "react";
-import { SessionApi } from "../Requests/SessionApi";
+import { UserApi } from "../Requests/UserApi";
 import { Link } from "react-router";
 
 
 function SignIn ({changeSession, session}: any) {
+
+
     const saveValues = (event: SyntheticEvent) => {
         const {name, value}:any = event.target as HTMLInputElement;
 
@@ -14,7 +16,7 @@ function SignIn ({changeSession, session}: any) {
     }
 
     const onSubmit = () => {
-        SessionApi.signIn(session)
+        UserApi.signIn(session)
         .then(res => {
             window.localStorage.session = res.token
             changeSession(res)

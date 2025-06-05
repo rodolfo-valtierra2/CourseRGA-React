@@ -5,21 +5,19 @@ import { AuthUser } from "src/common/decorators/auth_user";
 import { AccessTokenGuard } from "src/common/guards/access_token";
 import { RefreshTokenGuard } from "src/common/guards/refresh_token";
 import { SignInDto } from "src/validations/SignIn.dto";
-import { LoggingInterceptor } from "src/Interceptor/loggin.interceptor";
 
-@UseInterceptors(LoggingInterceptor)
 @Controller('auth')
 export class AuthController {
 	constructor(private authService: AuthService) { }
 
-  @Get()
-	check () {
+	@Get()
+	check() {
 		return "working"
 	}
 
 	@HttpCode(HttpStatus.OK)
 	@Post('signup')
-	signIn(@Body() signInForm: UserDto) {
+	signIn(@Body() signInForm: any) {
 		return this.authService.signUp(signInForm);
 	}
 

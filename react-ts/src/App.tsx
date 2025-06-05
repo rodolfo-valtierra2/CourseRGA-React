@@ -1,6 +1,6 @@
 import ProjectsPage from './projects/ProjectsPage.tsx'
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import HomePage from './Home/HomePage.tsx';
 import ProjectPage from './projects/ProjectPage.tsx'
 import NewProject from './projects/NewProject.tsx'
@@ -23,6 +23,7 @@ function App() {
 						<Route path="/projects" element={<ProjectsPage />} />
 						<Route path="/projects/:id" element={<ProjectPage />} />
 						<Route path="/NewProject" element={<NewProject />} />
+						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>
 				</LogIn>
 			</div>
