@@ -6,6 +6,7 @@ import ProjectPage from './projects/ProjectPage.tsx'
 import NewProject from './projects/NewProject.tsx'
 import { Provider } from './SessionContext'
 import LogIn from './LogIn'
+import NavBar from "./Content/NavBar";
 
 function App() {
 
@@ -18,13 +19,12 @@ function App() {
 			</header>
 			<div className="container">
 				<LogIn>
-					<Routes>
+						<NavBar/>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/projects" element={<ProjectsPage />} />
 						<Route path="/projects/:id" element={<ProjectPage />} />
 						<Route path="/NewProject" element={<NewProject />} />
 						<Route path="*" element={<Navigate to="/" replace />} />
-					</Routes>
 				</LogIn>
 			</div>
 		</Provider>

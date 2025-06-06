@@ -98,14 +98,17 @@ const projectAPI = {
 	},
 	find(id: string) {
     return fetch(`${url}/${id}`, {
-      headers: {'Authorization': 'bearer '+getToken(),}
+      headers: {Authorization: 'bearer '+getToken(),}
     })
       .then(checkStatus)
       .then(parseJSON)
       .then(convertToProjectModel);
   },
   deleteById(id: string | undefined) {
-    return fetch(`${url}/${id}`, {method: 'DELETE'})
+    return fetch(`${url}/${id}`, {
+			method: 'DELETE',
+			Authorization: 'bearer '+getToken()
+		})
     .catch(error => {
       console.log(error)
       alert("There was an error trying to delete")

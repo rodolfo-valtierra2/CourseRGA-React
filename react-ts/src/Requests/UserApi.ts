@@ -5,13 +5,12 @@ function request (method, body=null) {
     let content = {method}
     if(body && ['POST','PUT'].includes(method))
         content = {
+            ...content,
             headers: {
                 'Content-Type': 'application/json', // Specify JSON format
             },
             body: JSON.stringify(body),
-            ...content
         }
-    
     return content
 }
 
@@ -34,13 +33,10 @@ function requestAuth (method, body=null, token='') {
 
 
 const UserApi = {
-    signIn: (data) => fetch(url+"/signin", {
-        method: 'post',
-        body: JSON.stringify(data)
-    }).then(res => res.json()),
+    signIn: (data) => fetch(url+"/signin", request('POST',data)).then(res => res.json()),
     register: (data) => fetch(url+"/signup", request('POST', data))
         .then(res=> res.json()),
-    logOut: (token) => fetch(url+"/"+token, request('delete')).then(res => res.json())
+    logOut: (token) => fetch(url, requestAuth('delete',null,token)).then(res => res.json())
 }
 
 export {UserApi}

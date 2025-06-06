@@ -40,7 +40,7 @@ export class AuthService {
         }) as unknown as IUser;
     }
 
-    async signIn(data: SignInDto): Promise<IUser> {
+    async signIn(data: any): Promise<IUser> {
         const user = await this.usersService.findByEmail(data.email);
 
         if (user) { //user exist

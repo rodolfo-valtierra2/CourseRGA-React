@@ -5,13 +5,15 @@ import { useContext } from "react";
 import { Session } from "../SessionContext";
 
 export default function index (props: any) {
-    const [session, setSession]: any = useContext(Session)
+    const [session, ]: any = useContext(Session)
     
     if (Object.keys(session).length)
-        return <>{props.children}</>
+        return <Routes>
+					{props.children}
+				</Routes>
         
     return <Routes>
-        <Route path="/" element={<SignIn changeSession={setSession} session={session}/>}/>
+        <Route path="/" element={<SignIn/>}/>
         <Route path="/register" element={<SignUp />}/>
     </Routes>
 }

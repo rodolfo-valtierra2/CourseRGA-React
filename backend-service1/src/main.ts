@@ -6,7 +6,9 @@ import { TransformInterceptor } from './common/interceptors/tranform';
 
 async function bootstrap() {
   const app = await NestFactory.create(ProjectModule, {cors: true});
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+		whitelist: true
+	}));
   app.useGlobalInterceptors(new TransformInterceptor());
 
   const config = new DocumentBuilder()
