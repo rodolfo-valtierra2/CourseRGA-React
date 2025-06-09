@@ -7,24 +7,21 @@ import NewProject from './projects/NewProject.tsx'
 import { Provider } from './SessionContext'
 import LogIn from './LogIn'
 import NavBar from "./Content/NavBar";
+import Header  from './Content/Header.tsx';
 
 function App() {
 
 	return <BrowserRouter>
 		<Provider>
-			<header className="sticky">
-				<span className="logo">
-					<img src="/assets/logo-3.svg" alt="logo" width="49" height="99" />
-				</span>
-			</header>
+			<Header/>
 			<div className="container">
+				<NavBar/>
 				<LogIn>
-						<NavBar/>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/projects" element={<ProjectsPage />} />
 						<Route path="/projects/:id" element={<ProjectPage />} />
 						<Route path="/NewProject" element={<NewProject />} />
-						<Route path="*" element={<Navigate to="/" replace />} />
+						<Route path="/*" element={<Navigate to="/" replace />} />
 				</LogIn>
 			</div>
 		</Provider>

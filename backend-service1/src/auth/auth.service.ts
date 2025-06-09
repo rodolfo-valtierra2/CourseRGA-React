@@ -129,6 +129,4 @@ export class AuthService {
 
         throw new ForbiddenException('Access Denied');
     } 
-    
-
 }

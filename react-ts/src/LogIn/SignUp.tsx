@@ -24,7 +24,7 @@ function SignUp () {
             console.log(res)
              if(res.ok || !res.error) {
                 setSession(user);
-                window.localStorage.token = res.accessToken;
+                window.localStorage.session = res.accessToken;
                 return Navigate("/");
             }
             setError(res.message)

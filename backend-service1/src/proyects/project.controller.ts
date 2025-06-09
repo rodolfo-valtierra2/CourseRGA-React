@@ -10,8 +10,9 @@ export class ProjectController {
   constructor(private readonly ProjectService: ProjectService) {}
   
   @Get()
-  getFilter(@Query() query): Promise<IProject[]> {
-    return this.ProjectService.getProjects(query);
+  async getFilter(@Query() query): Promise<IProject[]> {
+    const project = await this.ProjectService.getProjects(query);
+    return project;
   }
 
   @Get()

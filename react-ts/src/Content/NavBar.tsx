@@ -1,16 +1,11 @@
 import { NavLink } from "react-router"
+import {useContext} from 'react'
+import { Session } from "../SessionContext";
 
-
-export default ({session}:any) => {
-
-    if(session?.id) <>
-        <NavLink to="/" className="button rounded">
-            SignIn
-        </NavLink>
-        <NavLink to="/signup" className="button rounded">
-            SignUp
-        </NavLink>
-        </>
+export default () => {
+    const [session,]: any = useContext(Session)
+    if(!session?.id) 
+        return '';
 
     return <>
         <NavLink to="/" className="button rounded">

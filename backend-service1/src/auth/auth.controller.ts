@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get, Req, UseInterceptors, BadRequestException } from "@nestjs/common";
+import { Body, Controller, Post, HttpCode, HttpStatus, UseGuards, Get, Req, UseInterceptors, BadRequestException, Param } from "@nestjs/common";
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/validations/Users.dto';
 import { AuthUser } from "src/common/decorators/auth_user";
@@ -10,11 +10,6 @@ import { NotFoundError } from "rxjs";
 @Controller('auth')
 export class AuthController {
 	constructor(private authService: AuthService) { }
-
-	@Get()
-	check() {
-		return "working"
-	}
 
 	@HttpCode(HttpStatus.OK)
 	@Post('signup')

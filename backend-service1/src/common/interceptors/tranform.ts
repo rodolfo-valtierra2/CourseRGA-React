@@ -5,10 +5,10 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
-    intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+    intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<any> {
         return next.handle()
         .pipe(
-            map(data => instanceToPlain(data))
+            map(data => data)
         );
     }
 }

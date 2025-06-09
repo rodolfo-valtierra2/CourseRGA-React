@@ -35,4 +35,8 @@ export class UsersService {
         return this.userModel.findByIdAndDelete(id).exec();
     }
 
+    getByToken (token: string) {
+        return this.userModel.find()
+    }
+
 }

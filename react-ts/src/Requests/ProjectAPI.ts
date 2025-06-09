@@ -1,6 +1,6 @@
 import { Project } from '../utils/Project.ts';
 const baseUrl = 'http://localhost:3000';
-const url = `${baseUrl}/projects`;
+const url = `${baseUrl}/proyects`;
 
 function translateStatusToErrorMessage(status: number) {
   switch (status) {
@@ -17,7 +17,6 @@ function checkStatus(response: any) {
   if (response.ok) {
     return response;
   } else {
-    console.log(response)
     const httpErrorInfo = {
       status: response.status,
       statusText: response.statusText,
@@ -51,12 +50,17 @@ function convertToProjectModel(item: any): Project {
 }
 
 function getToken () {
-  return window.localStorage.token;
+  return window.localStorage.session;
 }
 
 const projectAPI = {
   get(page = 1,sort='', limit = 20) {
-    return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=${sort}`)
+    return fetch(`${url}?_page=${page}&_limit=${limit}&_sort=${sort}`, {
+      headers: {
+        'Authorization': 'bearer '+getToken(),
+        'Content-Type': 'application/json'
+      }
+    })
       .then(delay(600))
       .then(checkStatus)
       .then(parseJSON)
@@ -106,8 +110,8 @@ const projectAPI = {
   },
   deleteById(id: string | undefined) {
     return fetch(`${url}/${id}`, {
-			method: 'DELETE',
-			Authorization: 'bearer '+getToken()
+			'method': 'DELETE',
+			'Authorization': 'bearer '+getToken()
 		})
     .catch(error => {
       console.log(error)
