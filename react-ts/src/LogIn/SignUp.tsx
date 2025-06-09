@@ -12,7 +12,7 @@ function SignUp () {
     const addValues = (event: SyntheticEvent) => {
         const {name, value}: any = event.target as HTMLInputElement;
 
-        setUser(old => {
+        setUser((old:any) => {
             old[name] = value;
             return old;
         });

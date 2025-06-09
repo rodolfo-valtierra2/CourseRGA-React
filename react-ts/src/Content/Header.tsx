@@ -21,7 +21,7 @@ export default function() {
         <span className="logo">
             <img src="/assets/logo-3.svg" alt="logo" width="49" height="99" />
         </span>
-        <button style={{float: 'right'}}>Log out</button>
+        <button onClick={logOut} style={{float: 'right'}}>Log out</button>
     </header>;
 
 }

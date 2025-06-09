@@ -110,8 +110,10 @@ const projectAPI = {
   },
   deleteById(id: string | undefined) {
     return fetch(`${url}/${id}`, {
-			'method': 'DELETE',
-			'Authorization': 'bearer '+getToken()
+      method: 'DELETE',
+      headers: {
+			  Authorization: 'bearer '+getToken()
+      }
 		})
     .catch(error => {
       console.log(error)

@@ -1,5 +1,4 @@
 import { createContext, useState} from "react";
-import { Routes } from "react-router";
 
 export const Session = createContext({});
 

@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState, type SyntheticEvent } from "react";
+import { useContext, useState, type SyntheticEvent } from "react";
 import { UserApi } from "../Requests/UserApi";
 import { Link } from "react-router";
 import { Session } from "../SessionContext";
 
 function SignIn() {
-    const [session, setSession]: any = useContext(Session);
+    const [, setSession] = useContext<any>(Session);
     const [user, setUser] = useState({});
     const [error, setError] = useState('');
 

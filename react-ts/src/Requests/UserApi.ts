@@ -1,8 +1,8 @@
 
 const url = 'http://localhost:3000/auth';
 
-function request (method, body=null) {
-    let content = {method}
+function request (method:string , body=null) {
+    let content = {}
     if(body && ['POST','PUT'].includes(method))
         content = {
             ...content,
@@ -14,7 +14,7 @@ function request (method, body=null) {
     return content
 }
 
-function requestAuth (method, body=null, token='') {
+function requestAuth (method:string, body=null, token='') {
     let content: any = {headers: {}};
 
     if(body && ['POST','PUT'].includes(method))
@@ -25,7 +25,7 @@ function requestAuth (method, body=null, token='') {
             },
             body: JSON.stringify(body),
         }
-    content.headers = {
+    return content.headers = {
         ...content.headers,
         Authorization: 'Bearer '+token
     }
@@ -33,10 +33,10 @@ function requestAuth (method, body=null, token='') {
 
 
 const UserApi = {
-    signIn: (data) => fetch(url+"/signin", request('POST',data)).then(res => res.json()),
-    register: (data) => fetch(url+"/signup", request('POST', data))
+    signIn: (data:any) => fetch(url+"/signin", request('POST',data)).then(res => res.json()),
+    register: (data:any) => fetch(url+"/signup", request('POST', data))
         .then(res=> res.json()),
-    logOut: (token) => fetch(url, requestAuth('delete',null,token)).then(res => res.json())
+    logOut: (token:string) => fetch(url, requestAuth('delete',null,token)).then(res => res.json())
 }
 
 export {UserApi}
