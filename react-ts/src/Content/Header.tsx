@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { UserApi } from "../Requests/UserApi";
 import { Session } from "../SessionContext";
+import { useNavigate } from "react-router-dom";
 
 export default function() {
+    const Navigate = useNavigate()
     const [, setSession]:any = useContext(Session)
 
     const logOut = () => {
@@ -11,6 +13,7 @@ export default function() {
         .then(() => {
             window.localStorage.removeItem('session');
             setSession({})
+            Navigate('/');
         });
     }
 
