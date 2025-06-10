@@ -23,11 +23,11 @@ services:
 
   # start the mongodb service as container
   database:
-    image: mongo:8.0
+    image: mongo:6.0
     container_name: mongodb
     restart: always
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: # DATABASE_NAME
-      MONGO_INITDB_ROOT_PASSWORD: # DATABASE_Password
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin

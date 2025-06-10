@@ -11,6 +11,11 @@ import { NotFoundError } from "rxjs";
 export class AuthController {
 	constructor(private authService: AuthService) { }
 
+	@Get()
+	hello () {
+		return 'hello wordl';
+	}
+
 	@HttpCode(HttpStatus.OK)
 	@Post('signup')
 	signIn(@Body() signInForm: any) {
