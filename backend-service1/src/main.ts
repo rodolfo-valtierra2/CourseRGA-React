@@ -1,15 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { ProjectModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './common/interceptors/tranform';
+import helmet from 'helmet';
+import * as compression from 'compression'
 
 async function bootstrap() {
-  const app = await NestFactory.create(ProjectModule, {cors: true});
-  app.useGlobalPipes(new ValidationPipe({
-		whitelist: true
-	}));
+  const app = await NestFactory.create(ProjectModule);
+  app.enableCors({origin: '*'})
+  app.useGlobalPipes(new ValidationPipe({}));
   app.useGlobalInterceptors(new TransformInterceptor());
+  app.enableVersioning({type: VersioningType.URI})
+  app.use(helmet())
+  app.use(compression())
 
   const config = new DocumentBuilder()
     .setTitle('Cats example')
