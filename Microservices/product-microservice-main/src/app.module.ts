@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductEntity } from './product_entity';
 
 @Module({
   imports: [
@@ -9,7 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       type: 'mongodb',
       host: 'localhost',
       database: 'product_microservices',
-      entities: [ProuctEntity],
+      entities: [ProductEntity],
       synchronize: true
     }),
     TypeOrmModule.forFeature([ProductEntity])

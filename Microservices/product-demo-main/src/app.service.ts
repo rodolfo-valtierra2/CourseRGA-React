@@ -11,11 +11,11 @@ export class AppService {
     return 'Hello World!';
   }
 
-  createProdict (createProductDto ){
+  createProdict (CreateProductDto ){
     return this.client.send({
       role: 'product',
       cmd: 'create'
-    }, createProductDto)
+    }, CreateProductDto)
   }
 
   getProductById(id: number) {

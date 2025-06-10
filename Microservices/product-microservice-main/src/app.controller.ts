@@ -12,18 +12,24 @@ export class AppController {
   }
 
   @MessagePattern({role: 'product', cmd: 'create'})
-  createProduct(ProductDto) {
-    const createData = this.appService.createProduct(ProductDto)
-    if( createData) {
+  async createProduct(ProductDto) {
+    const createData = await this.appService.createProduct(ProductDto)
+    if(createData) {
       return {
         status: 200,
         message: 'Prodcut created successfully'
       }
     } 
+
     return {
       status: 500,
-      message: 'Something weth wrong'
+      message: 'Something went wrong'
     }
+  }
+
+  @MessagePattern({role: 'product', cmd: 'get-by-id'}) 
+  getProductById (id: number) {
+    return this.appService.getProductById(id);
   }
 
 }

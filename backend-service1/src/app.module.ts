@@ -11,7 +11,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
    imports:[
     ConfigModule.forRoot({ isGlobal: true }),
     ThrottlerModule.forRoot([{ limit: 10, ttl: 60 }]),
-    MongooseModule.forRoot('mongodb://mongodb:27017/Proyects',
+    MongooseModule.forRoot('mongodb://localhost',
       {
         dbName: 'Proyects'
       }
